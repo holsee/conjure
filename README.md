@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="conjure.png" alt="Conjure Logo" width="200">
+  <img src="https://raw.githubusercontent.com/holsee/conjure/main/conjure.png" alt="Conjure Logo" width="200">
 </p>
 
 <p align="center">
