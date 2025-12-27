@@ -315,10 +315,8 @@ SKILL.md structure:
 name: my-skill
 description: What this skill does
 license: MIT
-compatibility:
-  products: [claude.ai, claude-code, api]
-  packages: [python3, nodejs]
-allowed_tools: [bash, view, create_file]
+compatibility: python3, nodejs
+allowed-tools: Bash(python3:*) Read Write
 ---
 
 # My Skill

@@ -2,8 +2,9 @@ defmodule Conjure.Skill do
   @moduledoc """
   Represents a loaded Agent Skill.
 
-  A skill contains metadata parsed from SKILL.md frontmatter, along with
-  information about available resources (scripts, references, assets).
+  A skill contains metadata parsed from SKILL.md frontmatter per the
+  Agent Skills specification (https://agentskills.io/specification),
+  along with information about available resources.
 
   ## Fields
 
@@ -11,10 +12,9 @@ defmodule Conjure.Skill do
   * `:description` - Comprehensive description including usage triggers
   * `:path` - Absolute path to the skill directory
   * `:license` - License identifier (e.g., "MIT", "Apache-2.0")
-  * `:version` - Semantic version string
-  * `:compatibility` - Map of environment requirements
-  * `:allowed_tools` - List of tools this skill may use
-  * `:metadata` - Additional frontmatter fields
+  * `:compatibility` - Environment requirements (e.g., "python3, poppler-utils")
+  * `:allowed_tools` - Pre-approved tools for this skill (experimental)
+  * `:metadata` - Additional frontmatter properties
   * `:body` - Full SKILL.md body content (nil until loaded)
   * `:body_loaded` - Whether the body has been loaded
   * `:resources` - Map of available resource files by category
@@ -31,9 +31,8 @@ defmodule Conjure.Skill do
           description: String.t(),
           path: Path.t(),
           license: String.t() | nil,
-          version: String.t() | nil,
-          compatibility: map() | nil,
-          allowed_tools: [String.t()] | nil,
+          compatibility: String.t() | nil,
+          allowed_tools: String.t() | nil,
           metadata: map(),
           body: String.t() | nil,
           body_loaded: boolean(),
@@ -53,7 +52,6 @@ defmodule Conjure.Skill do
     :description,
     :path,
     :license,
-    :version,
     :compatibility,
     :allowed_tools,
     metadata: %{},

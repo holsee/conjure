@@ -36,10 +36,8 @@ description: >
   Comprehensive PDF manipulation toolkit for extracting text and tables,
   creating new PDFs, merging/splitting documents, and handling forms.
 license: MIT
-compatibility:
-  products: [claude.ai, claude-code, api]
-  packages: [python3, poppler-utils]
-allowed_tools: [bash, view, create_file]
+compatibility: python3, poppler-utils
+allowed-tools: Bash(pdftotext:*) Read Write
 ---
 
 # PDF Skill

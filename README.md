@@ -11,6 +11,8 @@
 
 # Conjure
 
+> **⚠️ Alpha Release**: This library is under active development. APIs may change between versions as we refine the design based on feedback and evolving requirements. We recommend pinning to a specific version and reviewing the [CHANGELOG](CHANGELOG.md) before upgrading.
+
 An Elixir library for leveraging Anthropic Agent Skills in elixir with a configurable skill execution targets, native elixir skills and artefact storage targets.
 
 Conjure provides a complete implementation of the Agent Skills specification with a **unified Session API** supporting multiple execution backends: local shell, Docker containers, Anthropic's hosted Skills API, and native Elixir modules.
@@ -48,7 +50,7 @@ Add `conjure` to your dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:conjure, "~> 0.1.0-alpha"}
+    {:conjure, "~> 0.1.1-alpha"}
   ]
 end
 ```
@@ -456,10 +458,8 @@ my-skill/
 name: my-skill
 description: A comprehensive description of what this skill does and when to use it.
 license: MIT
-compatibility:
-  products: [claude.ai, claude-code, api]
-  packages: [python3, nodejs]
-allowed_tools: [bash, view, create_file]
+compatibility: python3, nodejs
+allowed-tools: Bash(python3:*) Bash(node:*) Read Write
 ---
 
 # My Skill

@@ -3,10 +3,8 @@ name: echo
 description: |
   A simple echo skill for testing. Use this when asked to echo or repeat messages.
 license: MIT
-compatibility:
-  products: [api]
-  packages: [python3]
-allowed_tools: [bash_tool, view]
+compatibility: python3
+allowed-tools: Bash(python3:*) Read
 ---
 
 # Echo Skill

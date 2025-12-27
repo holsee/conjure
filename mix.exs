@@ -1,7 +1,7 @@
 defmodule Conjure.MixProject do
   use Mix.Project
 
-  @version "0.1.0-alpha"
+  @version "0.1.1-alpha"
   @source_url "https://github.com/holsee/conjure"
 
   def project do

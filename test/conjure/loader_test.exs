@@ -20,8 +20,8 @@ defmodule Conjure.LoaderTest do
       assert pdf.name == "pdf"
       assert pdf.description =~ "PDF manipulation"
       assert pdf.license == "MIT"
-      assert pdf.version == "1.0.0"
-      assert pdf.allowed_tools == ["bash", "view", "create_file"]
+      assert pdf.compatibility == "python3, poppler-utils"
+      assert pdf.allowed_tools == "Bash(pdftotext:*) Read Write"
     end
 
     test "scans resource directories" do
@@ -39,6 +39,8 @@ defmodule Conjure.LoaderTest do
       name: test-skill
       description: A test skill
       license: MIT
+      compatibility: python3
+      allowed-tools: Bash(python3:*) Read
       ---
       # Body content
       """
@@ -48,6 +50,8 @@ defmodule Conjure.LoaderTest do
       assert frontmatter.name == "test-skill"
       assert frontmatter.description == "A test skill"
       assert frontmatter.license == "MIT"
+      assert frontmatter.compatibility == "python3"
+      assert frontmatter.allowed_tools == "Bash(python3:*) Read"
       assert body =~ "# Body content"
     end
 

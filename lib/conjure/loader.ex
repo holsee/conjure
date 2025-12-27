@@ -99,10 +99,9 @@ defmodule Conjure.Loader do
         description: frontmatter.description,
         path: expanded,
         license: frontmatter.license,
-        version: frontmatter.version,
         compatibility: frontmatter.compatibility,
         allowed_tools: frontmatter.allowed_tools,
-        metadata: frontmatter.extra,
+        metadata: frontmatter.metadata,
         body: nil,
         body_loaded: false,
         resources: resources

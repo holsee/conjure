@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1-alpha] - 2025-12-27
+
+### Changed
+
+- **BREAKING**: Updated YAML frontmatter schema to match [Agent Skills specification](https://agentskills.io/specification)
+  - Required fields: `name`, `description`
+  - Optional fields: `license`, `compatibility`, `allowed-tools`, `metadata`
+- **BREAKING**: Renamed `extra` field to `metadata` in `Conjure.Frontmatter` struct
+- **BREAKING**: Renamed `extra` field to `metadata` in `Conjure.Skill` struct
+- Updated all SKILL.md files and documentation to use spec-compliant frontmatter format
+
+### Added
+
+- Support for `compatibility` field (environment requirements, max 500 chars)
+- Support for `allowed-tools` field (space-delimited pre-approved tools, experimental)
+- Support for `metadata` field (additional key-value properties)
+- Alpha release notice in README with guidance on version pinning
+
 ## [0.1.0-alpha] - 2025-12-27
 
 ### Added

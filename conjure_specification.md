@@ -136,7 +136,7 @@ hosted execution model but uses a different integration pattern.
 ```elixir
 defmodule Conjure.Skill do
   @moduledoc """
-  Represents a loaded Agent Skill.
+  Represents a loaded Agent Skill per the Agent Skills specification.
   """
 
   @type t :: %__MODULE__{
@@ -144,7 +144,8 @@ defmodule Conjure.Skill do
     description: String.t(),
     path: Path.t(),
     license: String.t() | nil,
-    compatibility: map() | nil,
+    compatibility: String.t() | nil,
+    allowed_tools: String.t() | nil,
     metadata: map(),
     body: String.t() | nil,
     body_loaded: boolean(),
@@ -164,6 +165,7 @@ defmodule Conjure.Skill do
     :path,
     :license,
     :compatibility,
+    :allowed_tools,
     metadata: %{},
     body: nil,
     body_loaded: false,
@@ -177,16 +179,16 @@ end
 ```elixir
 defmodule Conjure.Frontmatter do
   @moduledoc """
-  Parsed YAML frontmatter from SKILL.md
+  Parsed YAML frontmatter from SKILL.md per the Agent Skills specification.
   """
 
   @type t :: %__MODULE__{
     name: String.t(),
     description: String.t(),
     license: String.t() | nil,
-    compatibility: map() | nil,
-    allowed_tools: [String.t()] | nil,
-    extra: map()
+    compatibility: String.t() | nil,
+    allowed_tools: String.t() | nil,
+    metadata: map()
   }
 
   defstruct [
@@ -195,7 +197,7 @@ defmodule Conjure.Frontmatter do
     :license,
     :compatibility,
     :allowed_tools,
-    extra: %{}
+    metadata: %{}
   ]
 end
 ```
@@ -876,21 +878,20 @@ The YAML frontmatter is delimited by `---` markers:
 name: my-skill
 description: A description of what this skill does and when to use it.
 license: MIT
-compatibility:
-  products: [claude.ai, claude-code, api]
-  packages: [python3, nodejs]
-allowed_tools: [bash, view, create_file]
+compatibility: python3, nodejs
+allowed-tools: Bash(python3:*) Read Write
 ---
 ```
 
 **Required fields:**
-- `name`: String, lowercase alphanumeric with hyphens
-- `description`: String, comprehensive description including triggers
+- `name`: String (max 64 chars), lowercase alphanumeric with hyphens
+- `description`: String (max 1024 chars), comprehensive description including triggers
 
 **Optional fields:**
-- `license`: String, license identifier or reference
-- `compatibility`: Map of environment requirements
-- `allowed_tools`: List of tools this skill can use
+- `license`: String, license identifier (e.g., "MIT", "Apache-2.0")
+- `compatibility`: String (max 500 chars), environment requirements
+- `allowed-tools`: String, space-delimited list of pre-approved tools (experimental)
+- `metadata`: Map, additional key-value properties
 
 ### 6.3 .skill File Format
 

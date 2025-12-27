@@ -6,10 +6,8 @@ description: |
   - Test that skills are working correctly
   - Demonstrate basic skill functionality
 license: MIT
-compatibility:
-  products: [api]
-  packages: [python3]
-allowed_tools: [bash_tool, view]
+compatibility: python3
+allowed-tools: Bash(python3:*) Read
 ---
 
 # Echo Skill

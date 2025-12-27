@@ -5,11 +5,8 @@ description: |
   creating new PDFs, merging/splitting documents, and handling forms.
   Use this skill when you need to work with PDF files.
 license: MIT
-version: "1.0.0"
-compatibility:
-  products: [claude.ai, claude-code, api]
-  packages: [python3, poppler-utils]
-allowed_tools: [bash, view, create_file]
+compatibility: python3, poppler-utils
+allowed-tools: Bash(pdftotext:*) Read Write
 ---
 
 # PDF Skill

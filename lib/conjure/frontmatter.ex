@@ -2,9 +2,20 @@ defmodule Conjure.Frontmatter do
   @moduledoc """
   Parsed YAML frontmatter from SKILL.md files.
 
-  The frontmatter contains structured metadata about a skill, including
-  required fields (name, description) and optional fields (license,
-  compatibility, allowed_tools).
+  The frontmatter contains structured metadata about a skill per the
+  Agent Skills specification (https://agentskills.io/specification).
+
+  ## Required Fields
+
+  * `name` - Max 64 chars, lowercase letters/numbers/hyphens
+  * `description` - Max 1024 chars, what the skill does and when to use it
+
+  ## Optional Fields
+
+  * `license` - License name or filename
+  * `compatibility` - Max 500 chars, environment requirements
+  * `allowed_tools` - List of pre-approved tools (experimental)
+  * `metadata` - Additional key-value properties
 
   ## Example
 
@@ -14,11 +25,8 @@ defmodule Conjure.Frontmatter do
         Comprehensive PDF manipulation toolkit for extracting text and tables,
         creating new PDFs, merging/splitting documents, and handling forms.
       license: MIT
-      version: "1.0.0"
-      compatibility:
-        products: [claude.ai, claude-code, api]
-        packages: [python3, poppler-utils]
-      allowed_tools: [bash, view, create_file]
+      compatibility: python3, poppler-utils
+      allowed-tools: Bash(pdftotext:*) Read
       ---
   """
 
@@ -26,10 +34,9 @@ defmodule Conjure.Frontmatter do
           name: String.t(),
           description: String.t(),
           license: String.t() | nil,
-          version: String.t() | nil,
-          compatibility: map() | nil,
-          allowed_tools: [String.t()] | nil,
-          extra: map()
+          compatibility: String.t() | nil,
+          allowed_tools: String.t() | nil,
+          metadata: map()
         }
 
   @enforce_keys [:name, :description]
@@ -37,13 +44,13 @@ defmodule Conjure.Frontmatter do
     :name,
     :description,
     :license,
-    :version,
     :compatibility,
     :allowed_tools,
-    extra: %{}
+    metadata: %{}
   ]
 
-  @known_fields ~w(name description license version compatibility allowed_tools)
+  # Note: spec uses "allowed-tools" with hyphen, we normalize to underscore
+  @known_fields ~w(name description license compatibility allowed-tools metadata)
 
   @doc """
   Creates a Frontmatter struct from a parsed YAML map.
@@ -56,20 +63,27 @@ defmodule Conjure.Frontmatter do
     with {:ok, name} <- require_field(map, "name"),
          {:ok, description} <- require_field(map, "description"),
          :ok <- validate_name(name) do
-      extra =
-        map
-        |> Map.drop(@known_fields)
-        |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
+      # Get metadata field if present, or collect unknown fields
+      metadata =
+        case Map.get(map, "metadata") do
+          nil ->
+            map
+            |> Map.drop(@known_fields)
+            |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
+
+          meta when is_map(meta) ->
+            Map.new(meta, fn {k, v} -> {String.to_atom(k), v} end)
+        end
 
       {:ok,
        %__MODULE__{
          name: name,
          description: description,
          license: Map.get(map, "license"),
-         version: Map.get(map, "version"),
          compatibility: Map.get(map, "compatibility"),
-         allowed_tools: Map.get(map, "allowed_tools"),
-         extra: extra
+         # Spec uses "allowed-tools" with hyphen
+         allowed_tools: Map.get(map, "allowed-tools"),
+         metadata: metadata
        }}
     end
   end

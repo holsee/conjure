@@ -7,10 +7,8 @@ description: |
   - Diagnose production issues
   - Generate log summaries and statistics
 license: MIT
-compatibility:
-  products: [api]
-  packages: [python3, requests]
-allowed_tools: [bash_tool, view, create_file]
+compatibility: python3, requests
+allowed-tools: Bash(python3:*) Read Write
 ---
 
 # Log Analyzer Skill
