@@ -63,8 +63,21 @@ defmodule Conjure.MixProject do
       maintainers: ["Steven Holdsworth"],
       licenses: ["Apache-2.0"],
       links: %{
-        "GitHub" => @source_url
-      }
+        "GitHub" => @source_url,
+        "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
+      },
+      files: ~w(
+        lib
+        priv
+        .formatter.exs
+        mix.exs
+        README.md
+        LICENSE
+        CHANGELOG.md
+        docs
+        conjure_specification.md
+        conjure-alt.png
+      )
     ]
   end
 
@@ -80,6 +93,7 @@ defmodule Conjure.MixProject do
       logo: "conjure-alt.png",
       extras: [
         {"README.md", [filename: "readme"]},
+        "CHANGELOG.md",
         "LICENSE",
         "docs/getting-started.md": [title: "Getting Started Tutorial"],
         "conjure_specification.md": [title: "Technical Specification"],
